@@ -40,19 +40,36 @@ eventEmitter.addListener("file_Read_finish", data => {
     }
 });
 
+class ReadContext {
+    key: string = "";
+    static newReadContext(key: string): ReadContext {
+        const readContext = new ReadContext();
+        readContext.key = key;
+        return readContext;
+    }
+    listener(eventName: "data" | "finish", cb: Function): void {
+
+    }
+}
+
 export default class ReactNativeFileStream {
 
     static callBackMap = new Map();
 
-    static async readFileAsBuffer(file: {
+    static initReadFile(file: {
         uri: string,
         fileName: string,
         fileSize: number
-    }, bufferSize: number, cb: Function) {
+    }, bufferSize: number, cb: Function): ReadContext | undefined {
         let uri = file.uri;
         let key = file.fileName + file.fileSize;
         this.callBackMap.set(key, cb);
-        ReactNativeFileStreamModule.startReadFileStream(uri, key, bufferSize);
+        console.log("  this.callBackMap", this.callBackMap)
+        let res = ReactNativeFileStreamModule.startReadFileStream(uri, key, bufferSize);
+        if (!res) {
+            return ReadContext.newReadContext(key);
+        }
+        return undefined;
     }
 
 }

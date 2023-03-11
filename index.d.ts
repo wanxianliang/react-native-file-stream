@@ -4,5 +4,5 @@ export default class ReactNativeFileStream {
         uri: string;
         fileName: string;
         fileSize: number;
-    }, bufferSize: number, cb: Function): Promise<void>;
+    }, bufferSize: number, cb: Function<string>): Promise<void>;
 }
