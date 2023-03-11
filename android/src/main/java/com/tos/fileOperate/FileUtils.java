@@ -38,7 +38,7 @@ public class FileUtils {
           WritableNativeMap writableNativeMap = new WritableNativeMap();
           writableNativeMap.putString("key", key);
           ReactNativeFileStreamModule.sendDataToJs(
-              EventNameEnum.FILE_READ_DATA.getName(), writableNativeMap);
+              EventNameEnum.FILE_READ_FINISH.getName(), writableNativeMap);
         } catch (Exception e) {
           e.printStackTrace();
         }

@@ -2,9 +2,12 @@
   "name": "react-native-file-stream",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "/dist/index.js",
+  "types": "index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc",
+    "release": "npm run build && npm publish"
   },
   "keywords": [
     "react-native"
@@ -12,10 +15,10 @@
   "author": "",
   "license": "",
   "peerDependencies": {
-    "react-native": "^0.71.4",
-    "react-native-windows": "0.41.0-rc.1"
+    "react-native": "*"
   },
   "dependencies": {
-    "react-native": "^0.71.4"
+    "react-native": "^0.71.4",
+    "typescript": "^4.1.5"
   }
 }
