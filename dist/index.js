@@ -49,6 +49,8 @@ var ReactNativeFileStream = /** @class */ (function () {
     function ReactNativeFileStream() {
     }
     ReactNativeFileStream.initReadFile = function (file, bufferSize, cb) {
+        console.log("sssssssssssssssssss", file);
+        throw new Error("ssss");
         var uri = file.uri;
         var key = file.fileName + file.fileSize;
         this.callBackMap.set(key, cb);
