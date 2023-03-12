@@ -1,6 +1,8 @@
 package com.tos.fileOperate;
 
 import android.net.Uri;
+
+import com.facebook.react.bridge.Promise;
 import com.facebook.react.bridge.ReactApplicationContext;
 import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
@@ -54,11 +56,12 @@ public class ReactNativeFileStreamModule extends ReactContextBaseJavaModule {
   }
 
   @ReactMethod
-  public boolean startReadFileStream(String path, String key, Integer bufferSize)
+  public void startReadFileStream(String path, String key, Integer bufferSize, Promise promise)
       throws IOException {
+    sendLogToJs("test");
     if (isEmpty(path) || isEmpty(key) || bufferSize == null) {
       sendLogToJs("path、key and bufferSize is required");
-      return false;
+      promise.resolve(false);
     }
     InputStream inputStream =
         Objects.requireNonNull(getCurrentActivity())
@@ -66,35 +69,37 @@ public class ReactNativeFileStreamModule extends ReactContextBaseJavaModule {
             .openInputStream(Uri.parse(path));
     if (inputStream == null || inputStream.available() == 0) {
       sendLogToJs("inputStream is unAvailable");
-      return false;
+      promise.resolve(false);
     }
     FileUtils.readFileStream((FileInputStream) inputStream, key, bufferSize);
-    return true;
+    promise.resolve(true);
   }
 
-  @ReactMethod
-  public boolean initFileWrite(String path, String key) {
-    if (isEmpty(path) || isEmpty(key)) {
+  @ReactMethod(isBlockingSynchronousMethod = true)
+  public boolean initFileWrite(String path) {
+    if (isEmpty(path)) {
       sendLogToJs("path and key is required");
       return false;
     }
+    String key = path;
     return FileUtils.initFileWrite(path, key);
   }
 
   @ReactMethod
-  public boolean writeFileStream(String key, String base64Data) {
-    if (isEmpty(key) || isEmpty(base64Data)) {
+  public boolean writeFileStream(String path, String base64Data) {
+    if (isEmpty(path) || isEmpty(base64Data)) {
       return false;
     }
-    FileUtils.writeFileStream(key, base64Data);
+    FileUtils.writeFileStream(path, base64Data);
     return true;
   }
 
   @ReactMethod
-  public boolean stopFileWrite(String key) {
-    if (isEmpty(key)) {
+  public boolean stopFileWrite(String path) {
+    if (isEmpty(path)) {
       return false;
     }
+    String key = path;
     FileUtils.stopFileWrite(key);
     return true;
   }

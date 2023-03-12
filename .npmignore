@@ -1,0 +1,8 @@
+node_modules
+example
+copy.sh
+android/gradle
+android/.idea
+android/.gradle
+android/local.properties
+example

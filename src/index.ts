@@ -1,76 +1,85 @@
+import { ReactNativeFileStreamEventEmitter, ReactNativeFileStreamModule } from "./Native";
 
-import { NativeEventEmitter, NativeModules } from 'react-native';
-
-const { ReactNativeFileStreamModule } = NativeModules;
-
-// const eventEmitter = new NativeEventEmitter(ReactNativeFileStreamModule);
-
-// eventEmitter.addListener("log_from_native", data => {
-//     console.log("log_from_native", data);
-// });
-
-// eventEmitter.addListener("file_read_data", (data: {
-//     key: string,
-//     base64Data: string
-// }) => {
-//     const key = data?.key;
-//     const base64Data = data?.base64Data;
-//     if (!key || !data) {
-//         console.log("read file error", data);
-//     }
-//     console.log("收到文件信息", base64Data.length);
-//     const callBack = ReactNativeFileStream.callBackMap.get(key);
-//     if (callBack) {
-//         callBack.call(null, {
-//             data: base64Data,
-//             hasMore: true
-//         });
-//     }
-// });
-
-// eventEmitter.addListener("file_Read_finish", data => {
-//     console.log('完成数据读取');
-//     const key = data?.key;
-//     const callBack = ReactNativeFileStream.callBackMap.get(key);
-//     if (callBack) {
-//         callBack.call(null, {
-//             data: null,
-//             hasMore: false
-//         });
-//     }
-// });
-
-class ReadContext {
-    key: string = "";
-    static newReadContext(key: string): ReadContext {
-        const readContext = new ReadContext();
-        readContext.key = key;
-        return readContext;
-    }
-    listener(eventName: "data" | "finish", cb: Function): void {
-
-    }
-}
-
-export default class ReactNativeFileStream {
-
-    static callBackMap = new Map();
-
-    static initReadFile(file: {
+class ReactNativeFileStream {
+    alreadyInitEventListener: boolean = false;
+    callBackMap: Map<string, Function> = new Map();
+    initEventListener(): void {
+        ReactNativeFileStreamEventEmitter.addListener("log_from_native", msg => {
+            console.log("log_from_native", msg);
+        });
+        ReactNativeFileStreamEventEmitter.addListener("file_read_data", (data: {
+            key: string,
+            data: string
+        }) => {
+            const key = data?.key;
+            const base64Data = data?.data;
+            if (!key || !base64Data) {
+                console.log("read file error", data);
+            }
+            const callBack = this.callBackMap.get(key);
+            if (callBack) {
+                callBack.call(null, {
+                    data: base64Data,
+                    hasMore: true
+                });
+            }
+        });
+        ReactNativeFileStreamEventEmitter.addListener("file_Read_finish", data => {
+            const key = data?.key;
+            const callBack = this.callBackMap.get(key);
+            if (callBack) {
+                callBack.call(null, {
+                    data: null,
+                    hasMore: false
+                });
+            }
+        });
+        this.alreadyInitEventListener = true;
+    };
+    checkAndInitEventListener() {
+        if (this.alreadyInitEventListener) {
+            return;
+        }
+        this.initEventListener();
+    };
+    async readFileStream(file: {
         uri: string,
         fileName: string,
         fileSize: number
-    }, bufferSize: number, cb: Function): ReadContext | undefined {
+    }, bufferSize: number, cb: Function): Promise<boolean> {
+        this.checkAndInitEventListener();
         let uri = file.uri;
         let key = file.fileName + file.fileSize;
         this.callBackMap.set(key, cb);
-        console.log("  this.callBackMap", this.callBackMap)
-        let res = ReactNativeFileStreamModule.startReadFileStream(uri, key, bufferSize);
-        if (!res) {
-            return ReadContext.newReadContext(key);
+        let result = await ReactNativeFileStreamModule.startReadFileStream(uri, key, bufferSize);
+        return result;
+    };
+
+    async initWriteFileStream(path: string): Promise<Boolean> {
+        this.checkAndInitEventListener();
+        let result = await ReactNativeFileStreamModule.initFileWrite(path);
+        return result;
+    };
+
+    async writeFileStream(path: string, base64Data: string): Promise<Boolean> {
+        if (!path || !base64Data) {
+            return false;
         }
-        return undefined;
-    }
+        this.checkAndInitEventListener();
+        let result = await ReactNativeFileStreamModule.writeFileStream(path, base64Data);
+        return result;
+    };
+
+    async stopWriteFileStream(path: string): Promise<Boolean> {
+        if (!path) {
+            return false;
+        }
+        this.checkAndInitEventListener();
+        let result = await ReactNativeFileStreamModule.stopFileWrite(path);
+        return result;
+    };
 
 }
 
+const ReactNativeFileOperateStream = new ReactNativeFileStream();
+export default ReactNativeFileOperateStream;

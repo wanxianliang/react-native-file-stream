@@ -5,7 +5,9 @@ import android.util.Base64;
 import com.facebook.react.bridge.WritableNativeMap;
 import com.tos.fileOperate.enums.EventNameEnum;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,15 +35,11 @@ public class FileUtils {
       }
       if (res == -1 || res == 0) {
         shouldRead = false;
-        // 发送通知
-        try {
-          WritableNativeMap writableNativeMap = new WritableNativeMap();
-          writableNativeMap.putString("key", key);
-          ReactNativeFileStreamModule.sendDataToJs(
-              EventNameEnum.FILE_READ_FINISH.getName(), writableNativeMap);
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
+        // send finish event
+        WritableNativeMap writableNativeMap = new WritableNativeMap();
+        writableNativeMap.putString("key", key);
+        ReactNativeFileStreamModule.sendDataToJs(
+            EventNameEnum.FILE_READ_FINISH.getName(), writableNativeMap);
         break;
       }
       if (res != buffSize) {
@@ -56,6 +54,13 @@ public class FileUtils {
       param.putString("data", base64Data);
       param.putString("key", key);
       ReactNativeFileStreamModule.sendDataToJs(EventNameEnum.FILE_READ_DATA.getName(), param);
+      if (!shouldRead) {
+        // send finish event
+        WritableNativeMap writableNativeMap = new WritableNativeMap();
+        writableNativeMap.putString("key", key);
+        ReactNativeFileStreamModule.sendDataToJs(
+                EventNameEnum.FILE_READ_FINISH.getName(), writableNativeMap);
+      }
     }
   }
 
