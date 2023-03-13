@@ -58,15 +58,19 @@ public class ReactNativeFileStreamModule extends ReactContextBaseJavaModule {
   @ReactMethod
   public void startReadFileStream(String path, String key, Integer bufferSize, Promise promise)
       throws IOException {
-    sendLogToJs("test");
     if (isEmpty(path) || isEmpty(key) || bufferSize == null) {
       sendLogToJs("path、key and bufferSize is required");
       promise.resolve(false);
     }
-    InputStream inputStream =
-        Objects.requireNonNull(getCurrentActivity())
-            .getContentResolver()
-            .openInputStream(Uri.parse(path));
+    InputStream inputStream = null;
+    if (path.startsWith("content")) {
+      inputStream =
+          Objects.requireNonNull(getCurrentActivity())
+              .getContentResolver()
+              .openInputStream(Uri.parse(path));
+    } else {
+      inputStream = new FileInputStream(path);
+    }
     if (inputStream == null || inputStream.available() == 0) {
       sendLogToJs("inputStream is unAvailable");
       promise.resolve(false);

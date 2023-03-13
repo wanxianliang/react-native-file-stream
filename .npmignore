@@ -3,6 +3,8 @@ example
 copy.sh
 android/gradle
 android/.idea
+android/build
 android/.gradle
 android/local.properties
 example
+build/

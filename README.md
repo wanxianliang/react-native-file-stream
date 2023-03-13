@@ -22,7 +22,7 @@ import ReactNativeFileStream from "react-native-file-stream";
 
 let bufferSize = 1024 * 127;
 ReactNativeFileStream.readFileStream({
-    uri: "content://xxxx.png",
+    uri: "content://xxxx.png", 
     fileName: "xxxx.png",
     fileSize: 120023
 }, bufferSize, (event) => {
@@ -43,7 +43,7 @@ ReactNativeFileStream.readFileStream({
 import ReactNativeFileStream from "react-native-file-stream";
 
 //1. init file write stream
-let path = "content://xxxx";
+let path = "file://xxxx";
 ReactNativeFileStream.initWriteFileStream(path);
 
 //2.append data
