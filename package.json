@@ -1,9 +1,9 @@
 {
   "name": "react-native-file-stream",
-  "version": "1.0.3",
+  "version": "1.0.4-beta",
   "description": "operate file stream in react native",
   "main": "/dist/index.js",
-  "types": "index.d.ts",
+  "types": "/types/index.d.ts",
   "scripts": {
     "build": "tsc",
     "release": "npm run build && npm set registry https://registry.npmjs.org/ && npm publish"
@@ -19,7 +19,8 @@
   "homepage": "https://github.com/wanxianliang/react-native-file-stream",
   "license": "MIT",
   "peerDependencies": {
-    "react-native": "*"
+    "react-native": "*",
+    "base64-arraybuffer": "1.0.2"
   },
   "devDependencies": {
     "react-native": "^0.71.4",

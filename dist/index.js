@@ -36,6 +36,8 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.DataConvertUtils = void 0;
+var DataConvertUtil_1 = require("./DataConvertUtil");
 var Native_1 = require("./Native");
 var ReactNativeFileStream = /** @class */ (function () {
     function ReactNativeFileStream() {
@@ -157,4 +159,5 @@ var ReactNativeFileStream = /** @class */ (function () {
     return ReactNativeFileStream;
 }());
 var ReactNativeFileOperateStream = new ReactNativeFileStream();
+exports.DataConvertUtils = DataConvertUtil_1.DataConvertUtil;
 exports.default = ReactNativeFileOperateStream;

@@ -1,59 +1,105 @@
-# react-native-file-stream
+# **react-native-file-stream**
 
-### Description
+### **Description**
 
-Manipulating the file stream in a very convenient way **for android only**
+The `react-native-file-stream` library provides a convenient way to manipulate file streams on Android.
 
-## Getting started
+## **Getting started**
 
-`$ npm install react-native-file-stream --save`
+To install the library, run the following command:
 
-### Mostly automatic installation(react native version <0.60)
+```
+$ npm install react-native-file-stream --save
+```
 
-`$ react-native link react-native-react-native-file-stream`
+### **Mostly automatic installation (for React Native version < 0.60)**
 
-## Usage
+To link the library, run the following command:
 
-#### Read file as stream
+```
+$ react-native link react-native-react-native-file-stream
+```
+
+### **Important**
+
+#### The way we read file
+
+![read](./image/read.png)
+
+#### The way we write file
+
+![write](./image/write.png)
+
+### **Reading files**
+
+**To read a file, follow these steps:**
+
+1. Convert `base64Data` to `ArrayBuffer`. `ArrayBuffer` contains the original data.
+2. Convert `ArrayBuffer` data to text or any other type of data you want.
+
+### **Writing files**
+
+**To write a file, follow these steps:**
+
+1. Convert your origin data to `ArrayBuffer`.
+2. Convert `ArrayBuffer` data to `base64Data`.
+3. Invoke the `writeFileStream` method to write data.
+
+## **Usage**
+
+### **Read file as stream**
 
 ```javascript
-
 import ReactNativeFileStream from "react-native-file-stream";
 
 let bufferSize = 1024 * 127;
 ReactNativeFileStream.readFileStream({
-    uri: "content://xxxx.png", 
+    uri: "content://xxxx.png",
     fileName: "xxxx.png",
     fileSize: 120023
 }, bufferSize, (event) => {
     const data = event?.data;
     const hasMore = event?.hasMore;
     if (hasMore == false) {
-        //finish read
+        // Finish reading.
     }
     if (data) {
-        //this is base64Data
+        // This is `base64Data`.
     }
 })
 ```
 
-#### Write file as stream
+### **Write file as stream**
 
 ```javascript
 import ReactNativeFileStream from "react-native-file-stream";
 
-//1. init file write stream
+// 1. Init file write stream.
 let path = "file://xxxx";
 ReactNativeFileStream.initWriteFileStream(path);
 
-//2.append data
+// 2. Append data.
 let base64Data = "xxxxxx";
 ReactNativeFileStream.writeFileStream(path, base64Data);
 
-//3.stop write file
+// 3. Stop writing file.
 ReactNativeFileStream.stopWriteFileStream(path);
 ```
 
-If you like this project, please add a star to [my Github Repo](https://github.com/wanxianliang/react-native-file-stream). Thanks!
+### **Data Conversion Methods**
+
+```javascript
+import ReactNativeFileStream, { DataConvertUtils } from "react-native-file-stream";
+
+const base64DataStr = "xxx";
+const arrayBufferData = DataConvertUtils.base64ToArryBuffer(base64DataStr);
+const base64Data2 = DataConvertUtils.arryBufferToBase64(arrayBufferData);
+
+const unit8ArrayData = DataConvertUtils.base64ToUnit8Array(base64DataStr);
+const base64Data3 = DataConvertUtils.unit8ArrayToBase64(unit8ArrayData);
+
+```
+
+If you find this project helpful, please give it a star on [my Github Repo](https://github.com/wanxianliang/react-native-file-stream). Thank you!
 
 That's all. Enjoy! :)

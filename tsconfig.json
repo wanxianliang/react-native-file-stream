@@ -9,7 +9,7 @@
             "dom"
         ],
         "declaration": true,
-        "declarationDir": ".",
+        "declarationDir": "types",
         "outDir": "dist",
         "strict": true,
         "esModuleInterop": true,

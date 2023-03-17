@@ -1,3 +1,4 @@
+import { DataConvertUtil } from "./DataConvertUtil";
 import { ReactNativeFileStreamEventEmitter, ReactNativeFileStreamModule } from "./Native";
 
 class ReactNativeFileStream {
@@ -82,4 +83,5 @@ class ReactNativeFileStream {
 }
 
 const ReactNativeFileOperateStream = new ReactNativeFileStream();
+export const DataConvertUtils = DataConvertUtil;
 export default ReactNativeFileOperateStream;

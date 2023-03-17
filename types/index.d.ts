@@ -1,3 +1,4 @@
+import { DataConvertUtil } from "./DataConvertUtil";
 declare class ReactNativeFileStream {
     alreadyInitEventListener: boolean;
     callBackMap: Map<string, Function>;
@@ -13,4 +14,5 @@ declare class ReactNativeFileStream {
     stopWriteFileStream(path: string): Promise<Boolean>;
 }
 declare const ReactNativeFileOperateStream: ReactNativeFileStream;
+export declare const DataConvertUtils: typeof DataConvertUtil;
 export default ReactNativeFileOperateStream;
