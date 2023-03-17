@@ -2,8 +2,8 @@
   "name": "react-native-file-stream",
   "version": "1.0.4-beta",
   "description": "operate file stream in react native",
-  "main": "/dist/index.js",
-  "types": "/types/index.d.ts",
+  "main": "dist/index.js",
+  "types": "types/index.d.ts",
   "scripts": {
     "build": "tsc",
     "release": "npm run build && npm set registry https://registry.npmjs.org/ && npm publish"
@@ -20,10 +20,13 @@
   "license": "MIT",
   "peerDependencies": {
     "react-native": "*",
-    "base64-arraybuffer": "1.0.2"
+    "base64-arraybuffer": "^1.0.2"
   },
   "devDependencies": {
     "react-native": "^0.71.4",
     "typescript": "^4.1.5"
+  },
+  "dependencies": {
+    "base64-arraybuffer": "^1.0.2"
   }
 }
