@@ -24,11 +24,11 @@ $ react-native link react-native-react-native-file-stream
 
 #### The way we read file
 
-![read](./image/read.png)
+![read](http://cdnqiniu.xiaozhitodo.com/tos/write.png)
 
 #### The way we write file
 
-![write](./image/write.png)
+![write](http://cdnqiniu.xiaozhitodo.com/tos/read.png)
 
 ### **Reading files**
 

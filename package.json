@@ -1,6 +1,6 @@
 {
   "name": "react-native-file-stream",
-  "version": "1.0.4-beta",
+  "version": "1.0.4-beta2",
   "description": "operate file stream in react native",
   "main": "dist/index.js",
   "types": "types/index.d.ts",
