@@ -1,6 +1,6 @@
 import ReactNativeFileStream, { DataConvertUtils } from "react-native-file-stream";
 
-const base64DataStr = "xxx";
+const base64DataStr = "cGxlYXNlIGdpdmUgbWUgYSBzdGFydA==";
 const arrayBufferData = DataConvertUtils.base64ToArryBuffer(base64DataStr);
 const base64Data2 = DataConvertUtils.arryBufferToBase64(arrayBufferData);
 

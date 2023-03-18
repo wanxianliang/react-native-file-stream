@@ -1,5 +1,4 @@
-import pkg from 'base64-arraybuffer';
-const { encode, decode } = pkg;
+import { encode, decode } from 'base64-arraybuffer';
 export class DataConvertUtil {
 
     static base64ToUnit8Array(base64String: string): Uint8Array {

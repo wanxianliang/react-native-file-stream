@@ -1,11 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.DataConvertUtil = void 0;
-var base64_arraybuffer_1 = __importDefault(require("base64-arraybuffer"));
-var encode = base64_arraybuffer_1.default.encode, decode = base64_arraybuffer_1.default.decode;
+var base64_arraybuffer_1 = require("base64-arraybuffer");
 var DataConvertUtil = /** @class */ (function () {
     function DataConvertUtil() {
     }
@@ -18,7 +14,7 @@ var DataConvertUtil = /** @class */ (function () {
     };
     DataConvertUtil.base64ToArryBuffer = function (base64String) {
         try {
-            return decode(base64String);
+            return (0, base64_arraybuffer_1.decode)(base64String);
         }
         catch (e) {
             throw e;
@@ -26,7 +22,7 @@ var DataConvertUtil = /** @class */ (function () {
     };
     DataConvertUtil.arryBufferToBase64 = function (buffer) {
         try {
-            return encode(buffer);
+            return (0, base64_arraybuffer_1.encode)(buffer);
         }
         catch (e) {
             throw e;

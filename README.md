@@ -17,7 +17,7 @@ $ npm install react-native-file-stream --save
 To link the library, run the following command:
 
 ```
-$ react-native link react-native-react-native-file-stream
+$ react-native link react-native-file-stream
 ```
 
 ### **Important**
@@ -79,7 +79,7 @@ let path = "file://xxxx";
 ReactNativeFileStream.initWriteFileStream(path);
 
 // 2. Append data.
-let base64Data = "xxxxxx";
+let base64Data = "cGxlYXNlIGdpdmUgbWUgYSBzdGFydA==";
 ReactNativeFileStream.writeFileStream(path, base64Data);
 
 // 3. Stop writing file.
@@ -91,7 +91,7 @@ ReactNativeFileStream.stopWriteFileStream(path);
 ```javascript
 import ReactNativeFileStream, { DataConvertUtils } from "react-native-file-stream";
 
-const base64DataStr = "xxx";
+const base64DataStr = "cGxlYXNlIGdpdmUgbWUgYSBzdGFydA==";
 const arrayBufferData = DataConvertUtils.base64ToArryBuffer(base64DataStr);
 const base64Data2 = DataConvertUtils.arryBufferToBase64(arrayBufferData);
 
@@ -101,5 +101,3 @@ const base64Data3 = DataConvertUtils.unit8ArrayToBase64(unit8ArrayData);
 ```
 
 If you find this project helpful, please give it a star on [my Github Repo](https://github.com/wanxianliang/react-native-file-stream). Thank you!
-
-That's all. Enjoy! :)
