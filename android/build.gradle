@@ -46,5 +46,11 @@ repositories {
 
 dependencies {
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
+   implementation("androidx.core:core:1.6.0") {
+    force = true
+   }
+   implementation("androidx.core:core-ktx:1.6.0") {
+    force = true
+  }
 }
   
